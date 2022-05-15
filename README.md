@@ -1,6 +1,6 @@
 # Alien Invasion Simulator
 
-A deterministic CLI application to simulate alien invasion as described in the task
+A deterministic CLI application to simulate alien invasion as described in the [task](./resources/task.md)
 
 # Assumptions
 
