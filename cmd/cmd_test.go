@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"io/ioutil"
@@ -9,7 +9,7 @@ import (
 )
 
 func Test_main_default_arguments(t *testing.T) {
-	actual := captureOutput(func() { main() })
+	actual := captureOutput(func() { Start() })
 
 	expected := `Alien 0 placed in city Bar
 Alien 1 placed in city Bee
@@ -32,7 +32,7 @@ Qu-ux
 }
 
 func Test_main_custom_arguments(t *testing.T) {
-	actual := captureOutput(func() { execute("../test/testData/oneCity.txt", 42, 2, 10) })
+	actual := captureOutput(func() { Execute("../test/testData/oneCity.txt", 42, 2, 10) })
 
 	expected := `Alien 0 placed in city Foo
 Alien 1 placed in city Foo

@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"flag"
@@ -21,12 +21,12 @@ func init() {
 
 }
 
-func main() {
+func Start() {
 	flag.Parse()
-	execute(inputFile, seedValue, numberOfAliens, maxIterations)
+	Execute(inputFile, seedValue, numberOfAliens, maxIterations)
 }
 
-func execute(inputFile string, seedValue int64, numberOfAliens, maxIterations int) {
+func Execute(inputFile string, seedValue int64, numberOfAliens, maxIterations int) {
 	if numberOfAliens <= 0 {
 		log.Fatal("Number of aliens should be positive integer")
 	}
