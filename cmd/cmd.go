@@ -16,7 +16,7 @@ var seedValue int64
 func init() {
 	flag.IntVar(&numberOfAliens, "numberOfAliens", 5, "Number of aliens invading")
 	flag.IntVar(&maxIterations, "maxIterations", 10000, "Maximum number of iterations")
-	flag.StringVar(&inputFile, "inputFile", "../test/testData/sample.txt", "World map input file")
+	flag.StringVar(&inputFile, "inputFile", "", "World map input file")
 	flag.Int64Var(&seedValue, "seedValue", 42, "Seed value for deterministic state")
 
 }
@@ -34,7 +34,9 @@ func Execute(inputFile string, seedValue int64, numberOfAliens, maxIterations in
 	if maxIterations < 0 {
 		log.Fatal("Maximum iteration should >= 0")
 	}
-
+	if len(inputFile) == 0 {
+		log.Fatal("Please enter input file path")
+	}
 	file, err := os.Open(inputFile)
 	if err != nil {
 		log.Fatalf("Error while opening file: %s, Error: %v", inputFile, err)

@@ -18,7 +18,7 @@ type Simulator struct {
 	RandGen           *rand.Rand
 }
 
-// New Simulator
+// Returns a new Simulator object, build using given file descriptor, number of aliens, maximum iterations and seed value
 func NewSimulator(file io.Reader, numOfAliens, maxIteration int, seedValue int64) (*Simulator, error) {
 	randGen := rand.New(rand.NewSource(seedValue))
 	world, err := initializeWorld(file)
@@ -35,12 +35,19 @@ func NewSimulator(file io.Reader, numOfAliens, maxIteration int, seedValue int64
 	}, nil
 }
 
+// Runs Simulation unitl any termination condition is met
+// Termination conditions:
+// 1. All Aliens are dead
+// 2. All Aliens are trapped
+// 3. Max iterations are reached
+// Print trapped Aliens if any
+// Print world post-invasion
 func (s *Simulator) Simulate() {
 	// All the aliens in the same city fight and destroy the city
 	fmt.Println("Iteration 0")
 	s.fight()
 	for i := 1; s.isAnyAlienAlive() && i <= s.MaxIterations; i++ {
-		fmt.Printf("Iternation %d\n", i)
+		fmt.Printf("Iteration %d\n", i)
 		s.move()
 		s.fight()
 		if s.areAllAliveAliensTrapped() {
@@ -53,6 +60,7 @@ func (s *Simulator) Simulate() {
 	fmt.Println(s.World.String())
 }
 
+// Move aliens in the neighbouring city if a path exists
 func (s *Simulator) move() {
 	for i := 0; i < len(s.Aliens); i++ {
 		if s.Aliens[i].IsAlive && !s.Aliens[i].IsTrapped {
@@ -72,6 +80,7 @@ func (s *Simulator) move() {
 	}
 }
 
+// If more than two aliens are present in the same city they fight and kill each other destroying city
 func (s *Simulator) fight() {
 	destroyedCities := make([]string, 0) // track destroyed cities to remove linking
 	allKilledAliens := make([]int, 0)    // track killed Aliens to mark them dead
@@ -110,6 +119,7 @@ func (s *Simulator) fight() {
 	s.clean(allKilledAliens, destroyedCities)
 }
 
+// Mark killed aliens as dead and remove destroyed cities from world
 func (s *Simulator) clean(killedAliens []int, destroyedCities []string) {
 	for _, alien := range killedAliens {
 		s.Aliens[alien].IsAlive = false
@@ -138,6 +148,7 @@ func (s *Simulator) getRandomNeighbour(city models.City) string {
 	return neigbourCities[s.RandGen.Intn(len(neigbourCities))]
 }
 
+// Returns false if all aliens are dead else true
 func (s *Simulator) isAnyAlienAlive() bool {
 	for i := 0; i < len(s.Aliens); i++ {
 		if s.Aliens[i].IsAlive {
@@ -147,6 +158,7 @@ func (s *Simulator) isAnyAlienAlive() bool {
 	return false
 }
 
+// Returns true if all aliens are trapped else false
 func (s *Simulator) areAllAliveAliensTrapped() bool {
 	for i := 0; i < len(s.Aliens); i++ {
 		if s.Aliens[i].IsAlive && !s.Aliens[i].IsTrapped {
@@ -156,6 +168,7 @@ func (s *Simulator) areAllAliveAliensTrapped() bool {
 	return true
 }
 
+// Prints all trapped aliens
 func (s *Simulator) printTrappedAliens() {
 	for i := 0; i < len(s.Aliens); i++ {
 		if s.Aliens[i].IsAlive && s.Aliens[i].IsTrapped {

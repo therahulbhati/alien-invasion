@@ -8,6 +8,7 @@ type Alien struct {
 	TotalMoves  int
 }
 
+// Returns a New Alien with given id and current city
 func NewAlien(id int, currentCity string) *Alien {
 	return &Alien{
 		Id:          id,

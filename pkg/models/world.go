@@ -9,12 +9,14 @@ type World struct {
 	Cities map[string]*City
 }
 
+// Returns new World
 func NewWorld() *World {
 	return &World{
 		Cities: make(map[string]*City),
 	}
 }
 
+// Returns World in the string format
 func (w *World) String() string {
 	cityNames := make([]string, 0)
 	for cityName := range w.Cities {

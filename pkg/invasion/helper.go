@@ -11,6 +11,7 @@ import (
 	"github.com/therahulbhati/alien-invasion/pkg/models"
 )
 
+// Returns new World Object created using given file descriptor
 func initializeWorld(file io.Reader) (*models.World, error) {
 	scanner := bufio.NewScanner(file)
 	cities := make(map[string]*models.City)
@@ -46,6 +47,7 @@ func initializeWorld(file io.Reader) (*models.World, error) {
 	}, nil
 }
 
+// Returns all the cities in sorted order which are not destroyed
 func getAllCities(world *models.World) []string {
 	cities := make([]string, 0, len(world.Cities))
 	for city := range world.Cities {
@@ -55,6 +57,7 @@ func getAllCities(world *models.World) []string {
 	return cities
 }
 
+// Creates new Aliens and new mapping between alien and city after placing aliens randomly in the cities
 func initializeAliens(world *models.World, numOfAliens int, randGen *rand.Rand) ([]*models.Alien, map[string]map[int]bool) {
 	totalCities := len(world.Cities)
 	cities := getAllCities(world)
@@ -73,6 +76,7 @@ func initializeAliens(world *models.World, numOfAliens int, randGen *rand.Rand) 
 	return aliens, cityAliensMapping
 }
 
+// Returns direction based on given string
 func getDirection(direction string) (models.Direction, error) {
 	switch strings.ToLower(direction) {
 	case "east":
@@ -88,6 +92,7 @@ func getDirection(direction string) (models.Direction, error) {
 	}
 }
 
+// Returns opposite direction of the given direction
 func getOppositeDirection(direction models.Direction) models.Direction {
 	switch direction {
 	case models.East:

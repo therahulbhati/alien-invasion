@@ -6,6 +6,7 @@ type City struct {
 	IsDestroyed bool
 }
 
+// Returns new City with the given name
 func NewCity(name string) *City {
 	return &City{
 		Name:        name,

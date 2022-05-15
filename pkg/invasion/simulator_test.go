@@ -72,7 +72,7 @@ func TestSimulator_Simulate(t *testing.T) {
 
 	out := captureOutput(func() { s.Simulate() })
 	expected := `Iteration 0
-Iternation 1
+Iteration 1
 Alien 0 moved to Bar from Foo
 Alien 1 moved to Foo from Qu-ux
 Alien 2 moved to Bar from Bee
