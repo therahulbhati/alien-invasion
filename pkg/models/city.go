@@ -1,16 +1,15 @@
 package models
 
-type Direction int
-
-const (
-	North Direction = iota
-	South
-	East
-	West
-)
-
 type City struct {
 	Name        string
-	Neighbour   map[Direction]*City
+	Neighbour   map[Direction]string
 	IsDestroyed bool
+}
+
+func NewCity(name string) *City {
+	return &City{
+		Name:        name,
+		Neighbour:   make(map[Direction]string),
+		IsDestroyed: false,
+	}
 }
